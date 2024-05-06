@@ -1,0 +1,64 @@
+
+  import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import recall_score
+---------------------------
+
+df= pd.read_csv("Iris.csv")
+---------------------------
+df.head()
+-----------------------------
+
+x_data = df[['SepalLengthCm', 'SepalWidthCm', 'PetalLengthCm','PetalWidthCm']]
+y_data = df['Species']
+--------------------------------
+
+x_data
+---------------------------------
+
+y_data
+------------------------------------
+x_train, x_test, y_train, y_test = train_test_split(x_data, y_data ,test_size =0.2, shuffle=False)
+------------------------------------
+
+x_train
+-----------------------------------
+
+x_test
+-------------------------
+y_train
+-------------------------
+
+y_test
+--------------------------
+
+sc = StandardScaler()
+X_train = sc.fit_transform(x_train)
+X_test = sc.transform(x_test)
+----------------------------
+
+classifier = GaussianNB()
+classifier.fit(X_train, y_train)
+----------------------------------
+
+y_pred = classifier.predict(X_test)
+y_pred
+-------------------------------
+
+cm = confusion_matrix(y_test, y_pred)
+print ("Accuracy : ", accuracy_score(y_test, y_pred))
+cm
+---------------------------------
+from sklearn.metrics import precision_score
+-------------------------------------
+
+print('Precision:', precision_score(y_test, y_pred,average='weighted'))
+------------------------------------
+
+recall = recall_score(y_test, y_pred, average='weighted')
+print('Recall:' , recall)

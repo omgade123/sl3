@@ -1,0 +1,83 @@
+import numpy as np
+import pandas as pd
+df=pd.read_csv("HousingData.csv")
+df
+-------
+df.isnull().sum()
+-------
+df.interpolate(method='linear', limit_direction='forward',inplace=True)
+X=df
+Y=df
+X=X.drop(['MEDV'],axis=1)
+X
+-------
+Y=df['MEDV']
+Y
+-------
+
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, Y_train, Y_test=train_test_split(X,Y,test_size=0.2,random_state=40)
+-------
+X_train
+-------
+X_test
+-------
+Y_test
+-------
+Y_train
+-------
+from sklearn.linear_model import LinearRegression
+lm = LinearRegression()
+lm.fit(X_train,Y_train)
+print(lm.score(X_test,Y_test))
+-------
+Y_train_pred=lm.predict(X_train)
+Y_test_pred=lm.predict(X_test)
+df=pd.DataFrame(Y_train_pred)
+from sklearn.metrics import mean_squared_error as mse
+error=mse(Y_test_pred,Y_test)
+print(error)
+mse=mse(Y_train_pred,Y_train)
+mse
+rmae=mse**0.5
+rmae
+-------
+import matplotlib.pyplot as plt
+plt.scatter(Y_train,Y_train_pred)
+-------
+lm.coef_
+--------
+lm.intercept_
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

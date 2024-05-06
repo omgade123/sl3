@@ -1,0 +1,36 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[3]:
+
+
+# Import necessary libraries
+import seaborn as sns
+import matplotlib.pyplot as plt
+from seaborn import set_theme
+
+# Set the seaborn theme for better aesthetics
+set_theme()
+
+# Load the Titanic dataset
+titanic_data = sns.load_dataset('titanic')
+titanic_data = titanic_data.dropna(subset=['age'])
+# Plotting a box plot for age distribution with respect to gender and survival status
+plt.figure(figsize=(12, 8))
+sns.boxplot(x='sex', y='age', hue='survived', data=titanic_data, palette='Set2')
+
+# Adding labels and title
+plt.xlabel('Gender')
+plt.ylabel('Age')
+plt.title('Age Distribution with Respect to Gender and Survival Status')
+
+# Show the plot
+plt.show()
+
+
+# In[ ]:
+
+
+
+
+s

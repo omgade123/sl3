@@ -1,0 +1,125 @@
+
+# In[1]:
+
+
+import pandas as pd
+import numpy as np
+import seaborn as sn
+import matplotlib.pyplot as plt
+
+
+# In[5]:
+
+
+titanic = sn.load_dataset('titanic')
+sn.load_dataset('titanic')
+
+
+# In[3]:
+
+
+titanic.isnull().sum()
+
+
+# In[4]:
+
+
+dummy_column=pd.get_dummies(titanic.deck)
+
+
+# In[5]:
+
+
+new_df=titanic.join(dummy_column).drop(['deck'],axis=1)
+
+
+# In[6]:
+
+
+new_df
+
+
+# In[7]:
+
+
+titanic['age'].dropna()
+
+
+# In[8]:
+
+
+titanic['embarked'].dropna()
+
+
+# In[9]:
+
+
+titanic['embark_town'].dropna()
+
+
+# In[28]:
+
+
+sn.distplot(x = titanic['age'], bins = 10,kde=False)
+
+
+# In[27]:
+
+
+sn.jointplot(x = titanic['age'], y = titanic['fare'], kind = 'scatter')
+
+
+# In[31]:
+
+
+sn.jointplot(x = titanic['age'], y = titanic['fare'], kind = 'hex')
+
+
+# In[30]:
+
+
+sn.rugplot(titanic['fare'])
+
+
+# In[29]:
+
+
+sn.boxplot(x='sex', y='age', data=titanic)
+
+
+# In[ ]:
+
+
+sn.boxplot(x='sex', y='age', data=titanic, hue='survived')
+
+
+# In[ ]:
+
+
+
+
+
+# In[32]:
+
+
+sn.barplot(x="sex", y="age", data=titanic)
+
+
+# In[33]:
+
+
+sn.barplot(x='sex', y='age', data=titanic, estimator=np.std)
+
+
+# In[34]:
+
+
+sn.countplot(x='sex', data=titanic)
+
+
+# In[ ]:
+
+
+
+
+

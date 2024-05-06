@@ -1,0 +1,205 @@
+
+
+# In[4]:
+
+
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer, WordNetLemmatizer
+from nltk import pos_tag
+from nltk.corpus import wordnet as wn
+from sklearn.feature_extraction.text import TfidfVectorizer
+import re
+
+
+# In[5]:
+
+
+def preprocess_text(text):
+    text = text.lower()
+    text = re.sub(r'[^\w\s]', ' ', text)
+    return text
+
+
+# In[6]:
+
+
+text = "i am a student.hello!! there is a session going onn."
+
+
+# In[7]:
+
+
+preprocessed_document = preprocess_text(text)
+text
+
+
+# In[8]:
+
+
+nltk.download('punkt')
+def tokenize_text(text):
+    tokens = word_tokenize(text)
+    return tokens
+
+
+# In[30]:
+
+
+tokens = tokenize_text(preprocessed_document)
+tokens
+
+
+# In[10]:
+
+
+def pos_tag_tokens(tokens):
+    pos_tags = pos_tag(tokens)
+    return pos_tags
+
+
+# In[11]:
+
+
+nltk.download('averaged_perceptron_tagger')
+pos_tags = pos_tag_tokens(tokens)
+
+
+# In[12]:
+
+
+pos_tags
+
+
+# In[13]:
+
+
+def remove_stop_words(tokens):
+    stop_words = set(stopwords.words('english'))
+    filtered_tokens = [word for word in tokens if word.lower() not in stop_words]
+    return filtered_tokens
+
+
+# In[14]:
+
+
+nltk.download('stopwords')
+filtered_tokens = remove_stop_words(tokens)
+
+
+# In[15]:
+
+
+filtered_tokens
+
+
+# In[16]:
+
+
+def stem_tokens(tokens):
+    stemmer = PorterStemmer()
+    stemmed_tokens = [stemmer.stem(word) for word in tokens]
+    return stemmed_tokens
+
+
+# In[17]:
+
+
+stemmed_tokens = stem_tokens(filtered_tokens)
+
+
+# In[18]:
+
+
+stemmed_tokens
+
+
+# In[19]:
+
+
+nltk.download('wordnet')
+
+
+# In[20]:
+
+
+def lemmatize_tokens(tokens):
+    lemmatizer = WordNetLemmatizer()
+    def get_wordnet_pos(treebank_tag):
+        if treebank_tag.startswith('J'):
+            return wn.ADJ
+        elif treebank_tag.startswith('V'):
+            return wn.VERB
+        elif treebank_tag.startswith('N'):
+            return wn.NOUN
+        elif treebank_tag.startswith('R'):
+            return wn.ADV
+        else:
+            return None
+    pos_tags = pos_tag(tokens)
+    
+    # Lemmatize each token based on its POS tag
+    lemmatized_tokens = []
+    for word, pos in pos_tags:
+        wordnet_pos = get_wordnet_pos(pos) or wn.NOUN
+        lemmatized_tokens.append(lemmatizer.lemmatize(word, pos=wordnet_pos))
+    
+    return lemmatized_tokens
+
+
+# In[21]:
+
+
+lemmatized_tokens = lemmatize_tokens(tokens)
+
+
+# In[22]:
+
+
+lemmatized_tokens
+
+
+# In[23]:
+
+
+def get_tfidf_representation(documents):
+    tfidf_vectorizer = TfidfVectorizer()
+    tfidf_matrix = tfidf_vectorizer.fit_transform(documents)
+    return tfidf_matrix
+
+
+# In[24]:
+
+
+tfidf_matrix = get_tfidf_representation([text])
+
+
+# In[25]:
+
+
+tfidf_matrix
+
+
+# In[27]:
+
+
+print("Original Tokens:")
+print(tokens)
+print("\nPOS Tagging:")
+print(pos_tags)
+print("\nFiltered Tokens after Stop Words Removal:")
+print(filtered_tokens)
+print("\nStemmed Tokens:")
+print(stemmed_tokens)
+print("\nLemmatized Tokens:")
+print(lemmatized_tokens)
+print("\nTF-IDF Representation:")
+print(tfidf_matrix)
+
+
+# In[ ]:
+
+
+
+
