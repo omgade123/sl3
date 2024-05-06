@@ -1,0 +1,64 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+-------------------
+df=pd.read_csv('iris.csv') #change accordingly
+df
+--------------------
+df.head()
+-------------------
+df.tail()
+-------------------
+df.index
+--------------------
+df.columns
+--------------------
+df.dtypes
+------------------
+df.columns.values
+--------------------
+df.describe()
+---------------------
+df.describe(include='all')
+------------------------
+df['Species']
+-----------------------
+df.sort_index(axis=1)
+------------------------
+df.sort_values(by='PetalLengthCm')
+---------------------
+df.iloc[5]
+-----------------------
+df[0:3]
+----------------------
+df.loc[:,['PetalLengthCm','Species']]
+---------------------------
+df.iloc[:,:4]
+------------------------
+df[df.columns[2:4]].iloc[5:10]
+------------------------------
+df.isna().sum()
+----------------------------
+cal=['SepalWidthCm']
+df.boxplot(cal)
+------------------------------
+def remove_outliers(df, column):
+    Q1 = df[column].quantile(0.25)
+    Q3 = df[column].quantile(0.75)
+    IQR = Q3 - Q1
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+    df_filtered = df[(df[column] >= lower_bound) & (df[column] <= upper_bound)]
+    return df_filtered
+df_clean = remove_outliers(df, 'SepalWidthCm')
+
+plt.boxplot(df['SepalWidthCm'], positions=[1], widths=0.5, patch_artist=True)
+
+plt.boxplot(df_clean['SepalWidthCm'], positions=[2], widths=0.5, patch_artist=True)
+# Set labels and title
+plt.xticks([1, 2], ['Original', 'Without Outliers'])
+plt.xlabel('Data')
+plt.ylabel('Sepal Width (cm)')
+plt.title('Boxplot of Sepal Width with and without Outliers')
+
+plt.show()

@@ -1,0 +1,135 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+
+# In[2]:
+
+
+df=sns.load_dataset('iris')
+
+
+# In[3]:
+
+
+df.head()
+
+
+# In[4]:
+
+
+df.dtypes
+
+
+# In[5]:
+
+
+df.hist(figsize=(10,8))
+plt.show()
+
+
+# In[6]:
+
+
+df.boxplot(figsize=(5,5))
+plt.show()
+
+
+# In[7]:
+
+
+sort_data = np.sort(df['sepal_width'])
+mean = np.mean(sort_data)
+std = np.std(sort_data)
+print('mean of the dataset is', mean)
+print('std. deviation is', std)
+threshold = 1
+outlier = []
+for i in sort_data:
+    z = (i-mean)/std
+    if z > threshold:
+        outlier.append(i)
+print('outlier in dataset is', outlier)
+
+
+# In[8]:
+
+
+sns.boxplot(data=df,x="species",y="sepal_width")
+
+
+# In[9]:
+
+
+sns.boxplot(data=df,x="species",y="petal_width")
+
+
+# In[10]:
+
+
+sns.boxplot(data=df,x="species",y="sepal_length")
+
+
+# In[11]:
+
+
+sns.boxplot(data=df,x="species",y="petal_length")
+
+
+# In[12]:
+
+
+Q1 = np.percentile(sort_data, 25, interpolation = 'midpoint')
+Q3 = np.percentile(sort_data, 75, interpolation = 'midpoint')
+print('Q1 25 percentile of the given data is, ', Q1)
+print('Q1 75 percentile of the given data is, ', Q3)
+IQR = Q3 - Q1
+print('Interquartile range is', IQR)
+low_lim = Q1 - 1.5 * IQR
+up_lim = Q3 + 1.5 * IQR
+print('low_limit is', low_lim)
+print('up_limit is', up_lim)
+outlier =[]
+for x in sort_data:
+    if ((x> up_lim) or (x<low_lim)):
+        outlier.append(x)
+
+print(' outlier in the dataset is', outlier)
+
+
+# In[13]:
+
+
+sns.scatterplot(data=df,x="species",y="petal_length")
+
+
+# In[14]:
+
+
+sns.scatterplot(data=df,x="species",y="sepal_length")
+
+
+# In[15]:
+
+
+sns.scatterplot(data=df,x="species",y="sepal_width")
+
+
+# In[16]:
+
+
+sns.scatterplot(data=df,x="species",y="petal_width")
+
+
+# In[ ]:
+
+
+
+

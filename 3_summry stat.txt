@@ -1,0 +1,124 @@
+
+
+    import pandas as pd
+    import numpy as np
+    df=pd.read_csv("D:\SEM 6\Final Practicals\Practical Dataset\Practical 3 Employee and Iris\employee_data.csv")
+    df.head()
+------------------
+ 
+    def categorize_age(age):
+        if 20 <= age < 30:
+            return '20-30'
+        elif 30 <= age < 40:
+            return '30-40'
+        elif 40 <= age < 50:
+            return '40-50'
+        elif 50 <= age < 60:
+            return '50-60'
+        else:
+            return 'Unknown'
+-------------------------
+
+    df['AgeGroup'] = df['age'].apply(categorize_age)
+
+-----------------------
+    statistics = df.groupby('AgeGroup')['salary'].describe()
+---------------------------
+
+    print("Summary Statistics for Salary Grouped by Age Group:\n", statistics)
+------------------------------
+  
+
+    df.groupby('AgeGroup')['salary'].median()
+---------------------------------
+    df.groupby('AgeGroup')['salary'].apply(lambda x: x.mode().iloc[0])
+
+ -------------------------------------
+
+    max_age=df.groupby('AgeGroup')['salary'].max()
+    max_age
+
+
+----------------------------------------------
+    min_age=df.groupby('AgeGroup')['salary'].min()
+    min_age
+
+ ------------------------------------------
+
+    range=(max_age)-(min_age)
+-------------------------------------------
+    range
+
+----------------------------------
+    mid_range=range/2
+    mid_range
+
+-------------------------------------
+    df.groupby('AgeGroup')['salary'].var()
+
+------------------------------------------
+    df.groupby('AgeGroup')['salary'].std()
+
+--------------------------------------------
+
+    df1=pd.read_csv("D:\SEM 6\Final Practicals\Practical Dataset\Practical 3 Employee and Iris\Iris.csv")
+----------------------------------------------
+    df1.head()
+-------------------------------------------------
+
+    def categorize_Species(Species):
+        if (Species=='Iris-setosa'):
+            return 'Iris-setosa'
+        elif (Species=='Iris-versicolor'):
+            return 'Iris-versicolor'
+        
+        else:
+            return 'Iris-virginica'
+            df1['SpeciesAge'] = df1['Species'].apply(categorize_Species)
+     
+      
+   ------------------------------------------         
+
+    df1['SpeciesGroup'] = df1['Species'].apply(categorize_Species)
+------------------------------------------------------
+    statistics1 = df1.groupby('SpeciesGroup')['SepalLengthCm'].describe()
+---------------------------------------------------
+    print("Summary Statistics for SepalLengthCm Grouped by species Group:\n",statistics1)
+
+-------------------------------------------------
+
+    df1.groupby('SpeciesGroup')['SepalLengthCm'].median()
+
+--------------------------------------------
+    max_species=df1.groupby('SpeciesGroup')['SepalLengthCm'].max()
+    max_species
+
+   
+------------------------------------------------
+    min_species=df1.groupby('SpeciesGroup')['SepalLengthCm'].min()
+    min_species
+-----------------------------------------------
+
+
+    range1
+----------------------------------------------
+
+
+    mid_range1=range1/2
+    mid_range1
+
+--------------------------------
+
+    df1.groupby('SpeciesGroup')['SepalLengthCm'].apply(lambda x: x.mode().iloc[0])
+
+-----------------------------------
+
+    df1.groupby('SpeciesGroup')['SepalLengthCm'].var()
+
+-----------------------------------------
+
+    df1.groupby('SpeciesGroup')['SepalLengthCm'].std()
+
+
+------------------------------------------
+    df1.groupby('SpeciesGroup')['SepalLengthCm'].mean()
